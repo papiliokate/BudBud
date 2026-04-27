@@ -92,8 +92,9 @@ function undoLastConnection() {
 
 function getLogicalPos(e) {
   const rect = canvas.getBoundingClientRect();
-  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  const touches = e.changedTouches && e.changedTouches.length > 0 ? e.changedTouches : e.touches;
+  const clientX = touches && touches.length > 0 ? touches[0].clientX : e.clientX;
+  const clientY = touches && touches.length > 0 ? touches[0].clientY : e.clientY;
   
   return {
     x: (clientX - rect.left) * (canvas.width / rect.width),
