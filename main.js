@@ -259,7 +259,22 @@ function onEnd(e) {
   const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
   const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
   const targetEl = document.elementFromPoint(clientX, clientY);
-  const likeBtn = targetEl ? targetEl.closest('.emoji-btn.like') : null;
+  let likeBtn = targetEl ? targetEl.closest('.emoji-btn.like') : null;
+  const droppedBud = targetEl ? targetEl.closest('.bud-container') : null;
+
+  // Holistic UX Fix: If they drop on the Bud container itself, auto-resolve the correct like
+  if (!likeBtn && droppedBud) {
+    const targetBudId = parseInt(droppedBud.id.replace('bud-', ''));
+    if (targetBudId !== draggingState.sourceBud) {
+       const budB = getBudData(targetBudId);
+       if (budB) {
+          const matchIndex = budB.likes.indexOf(draggingState.sourceLike);
+          if (matchIndex !== -1) {
+             likeBtn = document.querySelector(`.emoji-btn.like[data-bud="${targetBudId}"][data-index="${matchIndex}"]`);
+          }
+       }
+    }
+  }
 
   if (likeBtn && !likeBtn.classList.contains('connected')) {
     const targetBudId = parseInt(likeBtn.dataset.bud);
