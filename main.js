@@ -189,11 +189,12 @@ function renderBuds() {
 
 function startDrag(e) {
   e.preventDefault();
-  if (e.target.classList.contains('connected')) return;
+  const targetBtn = e.currentTarget || e.target.closest('.emoji-btn');
+  if (targetBtn.classList.contains('connected')) return;
   
-  const budId = parseInt(e.target.dataset.bud);
-  const emoji = e.target.dataset.emoji;
-  const index = e.target.dataset.index;
+  const budId = parseInt(targetBtn.dataset.bud);
+  const emoji = targetBtn.dataset.emoji;
+  const index = targetBtn.dataset.index;
   const pos = getLogicalPos(e);
   
   draggingState = { sourceBud: budId, sourceLike: emoji, sourceIndex: index, x: pos.x, y: pos.y };
@@ -258,11 +259,12 @@ function onEnd(e) {
   const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
   const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
   const targetEl = document.elementFromPoint(clientX, clientY);
+  const likeBtn = targetEl ? targetEl.closest('.emoji-btn.like') : null;
 
-  if (targetEl && targetEl.classList.contains('like') && !targetEl.classList.contains('connected')) {
-    const targetBudId = parseInt(targetEl.dataset.bud);
-    const targetEmoji = targetEl.dataset.emoji;
-    const targetIndex = targetEl.dataset.index;
+  if (likeBtn && !likeBtn.classList.contains('connected')) {
+    const targetBudId = parseInt(likeBtn.dataset.bud);
+    const targetEmoji = likeBtn.dataset.emoji;
+    const targetIndex = likeBtn.dataset.index;
 
     if (targetBudId !== draggingState.sourceBud) {
       const budA = getBudData(draggingState.sourceBud);
