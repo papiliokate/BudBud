@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bud Bud</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div id="game-container">
+      <div id="bg-layer"></div>
+      <canvas id="gameCanvas"></canvas>
+      <div id="buds-layer"></div>
+      <div id="heart-container"><img src="/assets/miro_heart.png" style="width: 100%; height: 100%; object-fit: contain;"></div>
+      <div id="ui-layer">
+        <div id="undo-btn" class="hidden">↩</div>
+        <h1 id="title">Bud Bud</h1>
+        <h2 id="subtitle">A Daily Puzzle Game</h2>
+        <h3 id="branding">oops-game.com</h3>
+        <button id="tutorial-btn">❓ How to Play</button>
+      </div>
+      <!-- Standard Victory Modal -->
+      <div id="victory-modal" class="hidden">
+        <div class="modal-content">
+          <h2>Victory!</h2>
+          <p id="vic-cypher"></p>
+          <div id="standard-buttons">
+            <button id="btn-install">📲 Add to Device</button>
+            <button id="btn-share">📤 Brag and get free puzzles</button>
+            <button id="btn-binge">🎟️ Binge Puzzles ($0.99)</button>
+            <button id="btn-hub">🎮 Go to Games Hub</button>
+          </div>
+          <div id="carousel-buttons" class="hidden">
+            <button id="btn-next">➡️ Play the next game</button>
+            <button id="btn-share-carousel" class="hidden">📤 Share for another ride</button>
+            <button id="btn-binge-carousel">🎟️ Binge this game</button>
+          </div>
+        </div>
+      </div>
+      <!-- Tutorial Modal -->
+      <div id="tutorial-modal" class="hidden">
+        <div class="modal-content">
+          <h2>How to Play</h2>
+          <p>Buds love to Connect!</p>
+          <p>Connect two Buds by dragging to connect their likes.</p>
+          <p>But watch out! Buds won't connect if one of them dislikes what the other likes.</p>
+          <p>Can you find Buds for all the Buds?</p>
+          <button id="btn-close-tutorial">Got it!</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+{
+  "epoch": 21566,
+  "date": "2029-01-17",
+  "buds": [
+    {
+      "id": 5,
+      "likes": [
+        "emoji_sun.png",
+        "emoji_turtle.png"
+      ],
+      "dislike": "emoji_butterfly.png",
+      "asset": "bud_6.png"
+    },
+    {
+      "id": 4,
+      "likes": [
+        "emoji_balloon.png",
+        "emoji_sun.png"
+      ],
+      "dislike": "emoji_diamond.png",
+      "asset": "bud_5.png"
+    },
+    {
+      "id": 0,
+      "likes": [
+        "emoji_butterfly.png",
+        "emoji_sun.png"
+      ],
+      "dislike": "emoji_balloon.png",
+      "asset": "bud_1.png"
+    },
+    {
+      "id": 1,
+      "likes": [
+        "emoji_sun.png",
+        "emoji_diamond.png"
+      ],
+      "dislike": "emoji_balloon.png",
+      "asset": "bud_2.png"
+    },
+    {
+      "id": 7,
+      "likes": [
+        "emoji_butterfly.png",
+        "emoji_rainbow.png"
+      ],
+      "dislike": "emoji_balloon.png",
+      "asset": "bud_8.png"
+    },
+    {
+      "id": 6,
+      "likes": [
+        "emoji_turtle.png",
+        "emoji_rainbow.png"
+      ],
+      "dislike": "emoji_balloon.png",
+      "asset": "bud_7.png"
+    },
+    {
+      "id": 3,
+      "likes": [
+        "emoji_rainbow.png",
+        "emoji_balloon.png"
+      ],
+      "dislike": "emoji_butterfly.png",
+      "asset": "bud_4.png"
+    },
+    {
+      "id": 2,
+      "likes": [
+        "emoji_rainbow.png",
+        "emoji_diamond.png"
+      ],
+      "dislike": "emoji_butterfly.png",
+      "asset": "bud_3.png"
+    }
+  ]
+}

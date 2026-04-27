@@ -1,0 +1,391 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f1ea; /* Canvas-like background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+}
+
+#game-container {
+  position: relative;
+  overflow: hidden;
+  background: url('/assets/bg.png') no-repeat center center;
+  background-size: cover;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+#bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(244, 241, 234, 0.85); /* Wash out the background */
+}
+
+#gameCanvas, #buds-layer, #ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#gameCanvas {
+  pointer-events: none;
+}
+
+#ui-layer {
+  pointer-events: none;
+}
+
+#title {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 40px;
+  font-weight: bold;
+  color: #c92a2a; /* Miro Red */
+  text-shadow: 2px 2px 0px #000;
+  pointer-events: auto;
+}
+
+#subtitle {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c7ed6; /* Miro Blue */
+  text-shadow: 1px 1px 0px #fff;
+  letter-spacing: 2px;
+  pointer-events: auto;
+}
+
+#branding {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  letter-spacing: 1px;
+  pointer-events: auto;
+}
+
+.bud-container {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Expand hover hit area to bridge the gap to the popup */
+.bud-container::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  z-index: -1;
+}
+
+/* Add a shadow so they look like they are standing on a surface */
+.bud-container::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(4px);
+}
+
+.bud-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  transition: transform 0.2s;
+  pointer-events: auto;
+}
+
+.bud-container.jumping .bud-image {
+  animation: jump 0.5s ease;
+}
+
+.bud-popup {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 40px 10px 40px 10px; /* Organic shape */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
+  pointer-events: none;
+  border: 4px solid #000;
+  z-index: 20;
+}
+
+.bud-container.show-popup .bud-popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Ensure the container is on top when its popup is shown */
+.bud-container.show-popup {
+  z-index: 10;
+}
+
+.popup-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.emoji-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Pebble shape */
+  background: #f8cc1b; /* Miro yellow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s, background 0.1s;
+  border: 3px solid #000;
+}
+
+.emoji-btn img {
+  pointer-events: none; /* Important for hit detection */
+}
+
+.emoji-btn.like {
+  background: #40c057; /* Vibrant Green */
+  border-color: #000;
+}
+
+.emoji-btn.like.connected {
+  background: #1c7ed6; /* Miro blue */
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.emoji-btn.dislike {
+  background: #c92a2a; /* Miro red */
+  border-color: #000;
+  cursor: default;
+}
+
+.emoji-btn:active {
+  transform: scale(0.9);
+}
+
+.hidden {
+  display: none !important;
+}
+
+#victory-modal {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: #f4f1ea;
+  padding: 30px;
+  border-radius: 50px 20px 60px 10px; /* Miro shape */
+  text-align: center;
+  width: 80%;
+  box-shadow: 15px 15px 0px rgba(0,0,0,1);
+  border: 5px solid #000;
+  color: #000;
+}
+
+.modal-content button {
+  width: 100%;
+  padding: 15px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 20px 10px 20px 10px;
+  background: #f8cc1b; /* Miro Yellow */
+  color: #000;
+  border: 3px solid #000;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-content button:hover {
+  background: #e6b800;
+}
+
+@keyframes jump {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes shiver {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  10% { transform: translate(-8px, -5px) rotate(-15deg) scale(1.1); }
+  20% { transform: translate(8px, 5px) rotate(15deg) scale(0.9); }
+  30% { transform: translate(-8px, 8px) rotate(-10deg) scale(1.2); }
+  40% { transform: translate(8px, -8px) rotate(10deg) scale(0.8); }
+  50% { transform: translate(-5px, 5px) rotate(-20deg) scale(1.1); }
+  60% { transform: translate(5px, -5px) rotate(20deg) scale(0.9); }
+  70% { transform: translate(-8px, -8px) rotate(-15deg) scale(1.15); }
+  80% { transform: translate(8px, 8px) rotate(15deg) scale(0.85); }
+  90% { transform: translate(-5px, 0) rotate(-10deg) scale(1.05); }
+}
+
+@keyframes ecstatic {
+  0% { transform: scale(1, 1) translateY(0) rotate(0deg); }
+  15% { transform: scale(1.8, 0.5) translateY(20px) rotate(0deg); } /* Deep squash */
+  35% { transform: scale(0.7, 1.8) translateY(-100px) rotate(-20deg); } /* Stretch and blast off */
+  55% { transform: scale(1.5, 1.5) translateY(-120px) rotate(180deg); } /* Huge mid-air spin */
+  75% { transform: scale(1.2, 1.2) translateY(-40px) rotate(380deg); } /* Falling and over-rotating */
+  90% { transform: scale(1.6, 0.6) translateY(10px) rotate(360deg); } /* Hard smash down */
+  100% { transform: scale(1, 1) translateY(0) rotate(360deg); } /* Recover */
+}
+
+@keyframes heart-pop {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(1.8); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+
+.bud-container.shiver .bud-image {
+  animation: shiver 0.5s;
+}
+
+.bud-container.ecstatic .bud-image {
+  animation: ecstatic 0.8s ease-in-out;
+}
+
+#heart-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  pointer-events: none;
+  z-index: 50;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+#heart-container.pop {
+  animation: heart-pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+#undo-btn {
+  position: absolute;
+  top: 170px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: #f8cc1b; /* Miro Yellow */
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* pebble shape */
+  border: 4px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 100;
+  user-select: none;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+  transition: transform 0.1s;
+  pointer-events: auto; /* Fix for unclickable inside ui-layer */
+}
+
+#undo-btn:active {
+  transform: translateX(-50%) scale(0.9);
+}
+
+#tutorial-btn {
+  display: block;
+  margin: 10px auto 0;
+  padding: 5px 15px;
+  background: #f8cc1b; /* Miro Yellow */
+  border: 2px solid #000;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+  font-family: inherit;
+  transition: transform 0.1s;
+}
+
+#tutorial-btn:active {
+  transform: scale(0.95);
+}
+
+#tutorial-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f4f1ea;
+  border: 5px solid #000;
+  border-radius: 20px 50px 30px 60px; /* organic modal */
+  padding: 30px;
+  text-align: center;
+  z-index: 200;
+  width: 80%;
+  max-width: 350px;
+  box-shadow: 15px 15px 0px rgba(0,0,0,0.8);
+  pointer-events: auto;
+}
+
+#tutorial-modal h2 { margin-top: 0; color: #c92a2a; font-size: 28px; text-shadow: 1px 1px 0px #000;}
+#tutorial-modal p { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+
+#btn-close-tutorial {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #1c7ed6; /* Miro Blue */
+  color: #fff;
+  border: 3px solid #000;
+  border-radius: 15px 30px 15px 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+  transition: transform 0.1s;
+}
+
+#btn-close-tutorial:active {
+  transform: scale(0.95);
+}

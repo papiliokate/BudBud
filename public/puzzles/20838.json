@@ -1,0 +1,42 @@
+{
+  "epoch": 20838,
+  "date": "2027-01-20",
+  "buds": [
+    {
+      "id": 1,
+      "likes": [
+        "emoji_diamond.png",
+        "emoji_watermelon.png"
+      ],
+      "dislike": "emoji_soccer.png",
+      "asset": "bud_2.png"
+    },
+    {
+      "id": 0,
+      "likes": [
+        "emoji_watermelon.png",
+        "emoji_rocket.png"
+      ],
+      "dislike": "emoji_car.png",
+      "asset": "bud_1.png"
+    },
+    {
+      "id": 2,
+      "likes": [
+        "emoji_diamond.png",
+        "emoji_watermelon.png"
+      ],
+      "dislike": "emoji_icecream.png",
+      "asset": "bud_3.png"
+    },
+    {
+      "id": 3,
+      "likes": [
+        "emoji_rocket.png",
+        "emoji_watermelon.png"
+      ],
+      "dislike": "emoji_ufo.png",
+      "asset": "bud_4.png"
+    }
+  ]
+}

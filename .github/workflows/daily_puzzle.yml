@@ -1,0 +1,42 @@
+name: Daily Puzzle Generation
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Midnight UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-puzzle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate Daily Puzzle
+        run: node scripts/generate_puzzle.js
+
+      - name: Commit and Push Puzzle Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/daily_puzzle.json
+          git commit -m "chore: update daily puzzle [skip ci]" || echo "No changes to commit"
+          git pull --rebase
+          git push
+
+      - name: Build Application
+        run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        run: npx firebase-tools deploy --only hosting:bud-bud --project go-rabbit-4af82 --token "${{ secrets.FIREBASE_TOKEN }}"

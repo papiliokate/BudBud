@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "go-rabbit-4af82"
+  },
+  "targets": {
+    "go-rabbit-4af82": {
+      "hosting": {
+        "bud-bud": [
+          "bud-bud"
+        ]
+      }
+    }
+  }
+}
