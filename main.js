@@ -564,10 +564,22 @@ function showVictory() {
   window._VIDEO_RECORDING_DONE = true;
   victoryModal.classList.remove('hidden');
   document.getElementById('vic-cypher').innerText = getDailyCypher(0);
+  
+  const nextBtn = document.getElementById('btn-next-level');
+  if (gameData.buds.length < 8 && !params.get('carousel')) {
+     nextBtn.classList.remove('hidden');
+  } else {
+     nextBtn.classList.add('hidden');
+  }
+
   if (analytics) logEvent(analytics, 'level_complete');
 }
 
 // Victory Modal Listeners
+document.getElementById('btn-next-level').addEventListener('click', () => {
+    if (analytics) logEvent(analytics, 'next_level_clicked');
+    window.location.href = `/?epoch=${gameData.epoch + 1}`;
+});
 document.getElementById('btn-install').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'install_prompt_clicked');
     alert("Add to Home Screen from your browser menu!");

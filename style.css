@@ -309,7 +309,7 @@ body {
 
 #undo-btn {
   position: absolute;
-  top: 170px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   width: 50px;

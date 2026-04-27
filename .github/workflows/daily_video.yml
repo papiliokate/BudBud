@@ -89,7 +89,7 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         if: steps.election.outputs.proceed == 'true'
-        run: npx firebase-tools deploy --only hosting:bud-bud --project go-rabbit-4af82 --token "${{ secrets.FIREBASE_TOKEN }}"
+        run: npx firebase-tools deploy --only hosting:bud-bud-game --project go-rabbit-4af82 --token "${{ secrets.FIREBASE_TOKEN }}"
 
       - name: Upload Video Artifact
         if: steps.election.outputs.proceed == 'true'
@@ -120,5 +120,5 @@ jobs:
           VIDEO_FILE=$(basename $(ls public/*.mp4 | head -n 1))
           
           curl --fail --silent --show-error -X POST -H "Content-Type: application/json" \
-          -d "{\"video_url\": \"https://bud-bud.web.app/$VIDEO_FILE?t=$TS\", \"text\": \"$CAPTION\", \"youtube_title\": \"$YT_TITLE\", \"target_channel\": \"all\"}" \
+          -d "{\"video_url\": \"https://bud-bud-game.web.app/$VIDEO_FILE?t=$TS\", \"text\": \"$CAPTION\", \"youtube_title\": \"$YT_TITLE\", \"target_channel\": \"all\"}" \
           https://hooks.zapier.com/hooks/catch/27231889/ujm5mjh/ || exit 1

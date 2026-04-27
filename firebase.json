@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "bud-bud",
+      "target": "bud-bud-game",
       "public": "dist",
       "ignore": [
         "firebase.json",

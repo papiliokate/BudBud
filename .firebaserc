@@ -5,8 +5,8 @@
   "targets": {
     "go-rabbit-4af82": {
       "hosting": {
-        "bud-bud": [
-          "bud-bud"
+        "bud-bud-game": [
+          "bud-bud-game"
         ]
       }
     }
