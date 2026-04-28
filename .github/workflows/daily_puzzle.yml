@@ -39,4 +39,4 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase Hosting
-        run: npx firebase-tools deploy --only hosting:bud-bud --project go-rabbit-4af82 --token "${{ secrets.FIREBASE_TOKEN }}"
+        run: npx firebase-tools deploy --only hosting:bud-bud-game --project go-rabbit-4af82 --token "${{ secrets.FIREBASE_TOKEN }}"
