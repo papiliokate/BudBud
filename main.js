@@ -107,14 +107,14 @@ async function initGame() {
   resizeCanvas();
   try {
     const epochParam = params.get('epoch');
-    let fetchUrl = '/daily_puzzle.json';
+    let fetchUrl = import.meta.env.BASE_URL + 'daily_puzzle.json';
     if (epochParam) {
-      fetchUrl = `/puzzles/${epochParam}.json`;
+      fetchUrl = import.meta.env.BASE_URL + `puzzles/${epochParam}.json`;
     }
     
     let res = await fetch(fetchUrl);
     if (!res.ok && epochParam) {
-        res = await fetch('/daily_puzzle.json');
+        res = await fetch(import.meta.env.BASE_URL + 'daily_puzzle.json');
     }
     gameData = await res.json();
 
@@ -124,7 +124,7 @@ async function initGame() {
        if (baseEpoch % 3 !== 1) {
           let targetEpoch = baseEpoch;
           while(targetEpoch % 3 !== 1) targetEpoch++;
-          let embedRes = await fetch(`/puzzles/${targetEpoch}.json`);
+          let embedRes = await fetch(import.meta.env.BASE_URL + `puzzles/${targetEpoch}.json`);
           if (embedRes.ok) {
               gameData = await embedRes.json();
           }
@@ -165,14 +165,14 @@ function renderBuds() {
     // To ensure unique emoji classes even if a bud has duplicate likes (which shouldn't happen with our generator),
     // we use an index or just the emoji.
     budEl.innerHTML = `
-      <img class="bud-image" src="/assets/${bud.asset}" draggable="false" />
+      <img class="bud-image" src="${import.meta.env.BASE_URL}assets/${bud.asset}" draggable="false" />
       <div class="bud-popup">
         <div class="popup-row">
-          <div class="emoji-btn like" data-bud="${bud.id}" data-emoji="${bud.likes[0]}" data-index="0"><img src="/assets/${bud.likes[0]}" style="width: 95%; height: 95%; object-fit: contain;" draggable="false" /></div>
-          <div class="emoji-btn like" data-bud="${bud.id}" data-emoji="${bud.likes[1]}" data-index="1"><img src="/assets/${bud.likes[1]}" style="width: 95%; height: 95%; object-fit: contain;" draggable="false" /></div>
+          <div class="emoji-btn like" data-bud="${bud.id}" data-emoji="${bud.likes[0]}" data-index="0"><img src="${import.meta.env.BASE_URL}assets/${bud.likes[0]}" style="width: 95%; height: 95%; object-fit: contain;" draggable="false" /></div>
+          <div class="emoji-btn like" data-bud="${bud.id}" data-emoji="${bud.likes[1]}" data-index="1"><img src="${import.meta.env.BASE_URL}assets/${bud.likes[1]}" style="width: 95%; height: 95%; object-fit: contain;" draggable="false" /></div>
         </div>
         <div class="popup-row">
-          <div class="emoji-btn dislike"><img src="/assets/${bud.dislike}" style="width: 95%; height: 95%; object-fit: contain;" draggable="false" /></div>
+          <div class="emoji-btn dislike"><img src="${import.meta.env.BASE_URL}assets/${bud.dislike}" style="width: 95%; height: 95%; object-fit: contain;" draggable="false" /></div>
         </div>
       </div>
     `;
