@@ -11,15 +11,10 @@ ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 const TTS_PATH = path.resolve('public/tts.mp3');
 const bgmDir = path.resolve('public/bgm');
-let BGM_PATH = '';
-if (fs.existsSync(bgmDir)) {
-    const bgmFiles = fs.readdirSync(bgmDir).filter(f => f.endsWith('.mp3'));
-    if (bgmFiles.length > 0) {
-        const randomBgm = bgmFiles[Math.floor(Math.random() * bgmFiles.length)];
-        BGM_PATH = path.resolve(bgmDir, randomBgm);
-        console.log(`Selected BGM: ${randomBgm}`);
-    }
-}
+const bgmFiles = fs.readdirSync(bgmDir).filter(f => f.endsWith('.mp3'));
+const randomBgm = bgmFiles[Math.floor(Math.random() * bgmFiles.length)];
+const BGM_PATH = path.resolve(bgmDir, randomBgm);
+console.log(`Selected BGM: ${randomBgm}`);
 const RAW_VIDEO = path.resolve('raw.mp4');
 const FINAL_VIDEO = path.resolve('public/daily_video.mp4');
 
@@ -76,6 +71,11 @@ async function main() {
     } else if (FORMAT === 'interactive') {
         urlParam = 'interactive';
         pool = ttsPools.interactive;
+    } else if (FORMAT === 'glitch') {
+        urlParam = 'glitch';
+        pool = ttsPools.glitch;
+    } else if (FORMAT === 'split') {
+        urlParam = 'split';
     }
 
     const ttsText = pool[Math.floor(Math.random() * pool.length)];
@@ -96,10 +96,21 @@ async function main() {
         fs.writeFileSync(TTS_PATH, Buffer.from([]));
     }
 
+    const isSplit = FORMAT === 'split';
+    
+    let asmrFilename = '';
+    if (isSplit) {
+        const ASMR_DIR = path.resolve('public/asmr');
+        if (fs.existsSync(ASMR_DIR)) {
+            const asmrFiles = fs.readdirSync(ASMR_DIR).filter(f => f.endsWith('.mp4'));
+            if (asmrFiles.length > 0) asmrFilename = asmrFiles[Math.floor(Math.random() * asmrFiles.length)];
+        }
+    }
+
     const browser = await puppeteer.launch({
         headless: 'new',
         args: [
-            '--window-size=720,1280',
+            `--window-size=720,1280`,
             '--autoplay-policy=no-user-gesture-required',
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -122,7 +133,11 @@ async function main() {
 
     console.log("Navigating to game and starting recording...");
     try {
-        await page.goto(`http://127.0.0.1:5173/?autoplay=${urlParam}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        let gameUrl = `http://127.0.0.1:5173/?autoplay=${urlParam}`;
+        if (isSplit && asmrFilename) {
+            gameUrl += `&asmr=${encodeURIComponent(asmrFilename)}`;
+        }
+        await page.goto(gameUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
     } catch (e) {
         console.warn("Navigation timeout reached, but we will wait for internal game completion flag.", e.message);
     }
@@ -130,13 +145,21 @@ async function main() {
     console.log("Starting Puppeteer Screen Recorder...");
     await recorder.start(RAW_VIDEO);
 
+    let actualDuration = 60;
+
     console.log("Recording... Waiting for game completion.");
     
-    let gameWon = false;
-    for (let i = 0; i < 240; i++) { 
-        gameWon = await page.evaluate(() => window._VIDEO_RECORDING_DONE === true);
-        if (gameWon) break;
-        await sleep(500);
+    if (isSplit) {
+        actualDuration = Math.floor(Math.random() * (25 - 15 + 1)) + 15;
+        console.log(`Split format selected. Recording for exactly ${actualDuration} seconds...`);
+        await sleep(actualDuration * 1000);
+    } else {
+        let gameWon = false;
+        for (let i = 0; i < 240; i++) { 
+            gameWon = await page.evaluate(() => window._VIDEO_RECORDING_DONE === true);
+            if (gameWon) break;
+            await sleep(500);
+        }
     }
 
     console.log("Gameplay finished. Saving video...");
@@ -148,52 +171,89 @@ async function main() {
     console.log("Compositing TikTok video using FFmpeg...");
     
     await new Promise((resolve, reject) => {
-        let f = ffmpeg().input(RAW_VIDEO);
-        
-        if (BGM_PATH) {
-            f = f.input(BGM_PATH).inputOptions(['-stream_loop', '-1']);
-            f = f.input(TTS_PATH);
-            f = f.complexFilter([
-                '[1:a]volume=0.3[bgm_quiet]',
-                '[2:a]volume=1.5[tts_loud]',
-                '[bgm_quiet][tts_loud]amix=inputs=2:duration=first:dropout_transition=3[audio_out]'
-            ])
-            .outputOptions([
-                '-y',
-                '-map 0:v',
-                '-map [audio_out]',
-                '-c:v libx264',
-                '-pix_fmt yuv420p',
-                '-preset slow',
-                '-crf 18',
-                '-c:a aac',
-                '-b:a 192k',
-                '-shortest'
-            ]);
+        let duration = actualDuration; // Set by recorder logic
+        if (!isSplit) {
+            try {
+                const probe = require('child_process').execSync(`"${ffmpegInstaller.path}" -i "${RAW_VIDEO}" 2>&1`, {encoding: 'utf8'});
+                const match = probe.match(/Duration: (\d+):(\d+):(\d+\.\d+)/);
+                if (match) {
+                   duration = parseInt(match[1]) * 3600 + parseInt(match[2]) * 60 + Math.ceil(parseFloat(match[3]));
+                   console.log("Raw video duration parsed:", duration);
+                }
+            } catch(e) {}
         } else {
-            f = f.input(TTS_PATH).outputOptions([
-                '-y',
-                '-map 0:v',
-                '-map 1:a',
-                '-c:v libx264',
-                '-pix_fmt yuv420p',
-                '-preset slow',
-                '-crf 18',
-                '-c:a aac',
-                '-b:a 192k',
-                '-shortest'
-            ]);
+            console.log("Using randomized duration for split video:", duration);
         }
 
-        f.save(FINAL_VIDEO)
-        .on('end', () => {
-            console.log(`Successfully generated TikTok video at: ${FINAL_VIDEO}`);
-            resolve();
-        })
-        .on('error', (err) => {
-            console.error("FFmpeg Error:", err);
-            reject(err);
-        });
+        let cmd = ffmpeg().input(RAW_VIDEO);
+
+        if (FORMAT === 'split') {
+            const ASMR_DIR = path.resolve('public/asmr');
+            const RELAX_DIR = path.resolve('public/relaxing_audio');
+            
+            let asmrFile = asmrFilename ? path.resolve(ASMR_DIR, asmrFilename) : '';
+            let relaxFile = '';
+            
+            if (fs.existsSync(RELAX_DIR)) {
+                const relaxFiles = fs.readdirSync(RELAX_DIR).filter(f => f.endsWith('.mp3') || f.endsWith('.wav'));
+                if (relaxFiles.length > 0) relaxFile = path.resolve(RELAX_DIR, relaxFiles[Math.floor(Math.random() * relaxFiles.length)]);
+            }
+
+            if (asmrFile && relaxFile) {
+                cmd.input(asmrFile).inputOptions(['-stream_loop', '-1'])
+                   .input(relaxFile).inputOptions(['-stream_loop', '-1'])
+                   .complexFilter([
+                       '[1:a]volume=0.5[asmr_audio]',
+                       '[2:a]volume=0.5[relax_audio]',
+                       '[asmr_audio][relax_audio]amix=inputs=2:duration=first:dropout_transition=3[audio_out]'
+                   ])
+                   .outputOptions([
+                       '-y',
+                       '-map 0:v',
+                       '-map [audio_out]',
+                       '-c:v libx264',
+                       '-pix_fmt yuv420p',
+                       '-preset ultrafast',
+                       '-crf 18',
+                       '-c:a aac',
+                       '-b:a 192k',
+                       `-t ${duration}`
+                   ]);
+            } else {
+                 console.warn("Missing ASMR or Relaxing Audio files! Falling back to raw video.");
+                 cmd.outputOptions(['-y', '-map 0:v', '-c:v libx264', '-preset ultrafast', '-crf 18']);
+            }
+        } else {
+            cmd.input(BGM_PATH).inputOptions(['-stream_loop', '-1'])
+               .input(TTS_PATH)
+               .complexFilter([
+                   '[1:a]volume=0.3[bgm_quiet]',
+                   '[2:a]volume=1.5[tts_loud]',
+                   '[bgm_quiet][tts_loud]amix=inputs=2:duration=first:dropout_transition=3[audio_out]'
+               ])
+               .outputOptions([
+                   '-y',
+                   '-map 0:v',
+                   '-map [audio_out]',
+                   '-c:v libx264',
+                   '-pix_fmt yuv420p',
+                   '-preset ultrafast',
+                   '-crf 18',
+                   '-c:a aac',
+                   '-b:a 192k',
+                   '-shortest'
+               ]);
+        }
+        
+        cmd.save(FINAL_VIDEO)
+            .on('end', () => {
+                console.log(`Successfully generated TikTok video at: ${FINAL_VIDEO}`);
+                resolve();
+            })
+            .on('error', (err) => {
+                console.error("FFmpeg Error:", err);
+                reject(err);
+            });
     });
 }
 

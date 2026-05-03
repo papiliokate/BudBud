@@ -37,8 +37,12 @@ let activeConnections = []; // { budA: id, likeA: emoji, budB: id, likeB: emoji 
 let draggingState = null; // { sourceBud: id, sourceLike: emoji, x: px, y: px }
 
 function resizeCanvas() {
+  let effectiveHeight = window.innerHeight;
+  if (params.get('autoplay') === 'split') {
+      effectiveHeight = window.innerHeight / 2;
+  }
   const scaleWidth = window.innerWidth / LOGICAL_WIDTH;
-  const scaleHeight = window.innerHeight / LOGICAL_HEIGHT;
+  const scaleHeight = effectiveHeight / LOGICAL_HEIGHT;
   const scale = Math.min(scaleWidth, scaleHeight);
 
   container.style.width = `${LOGICAL_WIDTH}px`;
@@ -49,7 +53,11 @@ function resizeCanvas() {
   
   container.style.position = 'absolute';
   container.style.left = '50%';
-  container.style.top = '50%';
+  if (params.get('autoplay') === 'split') {
+      container.style.top = '25%';
+  } else {
+      container.style.top = '50%';
+  }
   container.style.marginLeft = `-${LOGICAL_WIDTH / 2}px`;
   container.style.marginTop = `-${LOGICAL_HEIGHT / 2}px`;
 
@@ -142,6 +150,44 @@ async function initGame() {
   } catch (err) {
     console.error("Failed to load puzzle", err);
   }
+}
+
+if (new URLSearchParams(window.location.search).get('autoplay') === 'split') {
+    const asmrFile = new URLSearchParams(window.location.search).get('asmr');
+    if (asmrFile) {
+        const vid = document.createElement('video');
+        vid.src = `/asmr/${asmrFile}`;
+        vid.autoplay = true;
+        vid.loop = true;
+        vid.muted = true;
+        vid.style.position = 'absolute';
+        vid.style.bottom = '0';
+        vid.style.left = '0';
+        vid.style.width = '100%';
+        vid.style.height = '50%';
+        vid.style.objectFit = 'cover';
+        document.body.appendChild(vid);
+    }
+    
+    const banner = document.createElement('div');
+    banner.innerText = "Bud Bud Puzzle from Oops-games";
+    banner.style.position = 'absolute';
+    banner.style.top = '50%';
+    banner.style.left = '50%';
+    banner.style.transform = 'translate(-50%, -50%)';
+    banner.style.background = 'rgba(0, 0, 0, 0.85)';
+    banner.style.color = '#fde047';
+    banner.style.padding = '12px 24px';
+    banner.style.borderRadius = '12px';
+    banner.style.border = '2px solid #b45309';
+    banner.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+    banner.style.fontWeight = '800';
+    banner.style.fontSize = '28px';
+    banner.style.zIndex = '1000';
+    banner.style.whiteSpace = 'nowrap';
+    banner.style.boxShadow = '0 4px 15px rgba(0,0,0,0.5)';
+    banner.style.textShadow = '1px 1px 2px rgba(0,0,0,0.8)';
+    document.body.appendChild(banner);
 }
 
 function renderBuds() {
@@ -529,6 +575,7 @@ async function autoSolve(format) {
   // To solve, we need a cycle of length N
   // In a well-formed puzzle, the generator guarantees exactly one valid cycle of length N.
   // We'll just grab N unique connections.
+  const speedMultiplier = format === 'split' ? 3 : 1;
   const moves = edges.slice(0, buds.length);
   const movesToPlay = format === 'interactive' ? moves.slice(0, moves.length - 1) : moves;
 
@@ -547,7 +594,7 @@ async function autoSolve(format) {
       bubbles: true
     }));
     
-    await sleep(300);
+    await sleep(300 / speedMultiplier);
     
     // Drag to B
     const steps = 15;
@@ -559,7 +606,7 @@ async function autoSolve(format) {
         clientY: y + rectB.height/2,
         bubbles: true
       }));
-      await sleep(30);
+      await sleep(30 / speedMultiplier);
     }
     
     // Mouseup B
@@ -569,7 +616,7 @@ async function autoSolve(format) {
       bubbles: true
     }));
     
-    await sleep(600);
+    await sleep(600 / speedMultiplier);
   }
 
   if (format === 'fail') {
