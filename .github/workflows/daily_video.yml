@@ -1,10 +1,8 @@
 name: Daily Video Generation
 
 on:
-  schedule:
-    - cron: '35 9 * * *'
-    - cron: '0 18 * * *'
-    - cron: '0 22 * * *'
+  repository_dispatch:
+    types: [generate-daily-video]
   workflow_dispatch:
 
 jobs:
@@ -69,30 +67,24 @@ jobs:
           echo "FORMAT=$SELECTED_FORMAT" >> $GITHUB_ENV
 
       - name: Install System Dependencies
-        if: steps.election.outputs.proceed == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb libgbm-dev ffmpeg
       
       - name: Install Node Dependencies
-        if: steps.election.outputs.proceed == 'true'
         run: npm ci
 
       - name: Generate Video
-        if: steps.election.outputs.proceed == 'true'
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 720x1280x24" node scripts/generate_video.js
 
       - name: Build Application
-        if: steps.election.outputs.proceed == 'true'
         run: npm run build
 
       - name: Deploy to Firebase Hosting
-        if: steps.election.outputs.proceed == 'true'
         run: npx firebase-tools deploy --only hosting:bud-bud-game --project go-rabbit-4af82 --token "${{ secrets.FIREBASE_TOKEN }}"
 
       - name: Upload Video Artifact
-        if: steps.election.outputs.proceed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: daily_video
@@ -100,7 +92,7 @@ jobs:
           retention-days: 1
 
       - name: Trigger Zapier Distribution
-        if: success() && steps.election.outputs.proceed == 'true'
+        if: success()
         run: |
           CAPTIONS=(
             "Can you match all the friends? 🤝 Play Bud Bud free at oops-games-hub.web.app"
