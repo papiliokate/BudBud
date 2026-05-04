@@ -22,6 +22,13 @@ if (import.meta.env && import.meta.env.VITE_FIREBASE_API_KEY) {
   }
 }
 
+let publisherDomain = 'unknown';
+if (document.referrer) {
+    try {
+        publisherDomain = new URL(document.referrer).hostname;
+    } catch(e) {}
+}
+
 // 1. Fixed Resolution Scaling Architecture
 const LOGICAL_WIDTH = 450;
 const LOGICAL_HEIGHT = 800;
@@ -653,7 +660,11 @@ function showVictory() {
      nextBtn.classList.add('hidden');
   }
 
-  if (analytics) logEvent(analytics, 'level_complete');
+  if (analytics) {
+      let eventParams = {};
+      if (params.get('mode') === 'embed') eventParams.publisher_domain = publisherDomain;
+      logEvent(analytics, 'level_complete', eventParams);
+  }
 }
 
 // Victory Modal Listeners
@@ -710,7 +721,7 @@ async function advanceCarousel() {
 
 const params = new URLSearchParams(window.location.search);
 if (params.get('mode') === 'embed') {
-  if (analytics) logEvent(analytics, 'embed_visit', { game_id: 'BB' });
+  if (analytics) logEvent(analytics, 'embed_visit', { game_id: 'BB', publisher_domain: publisherDomain });
   document.getElementById('standard-buttons').classList.add('hidden');
   document.getElementById('carousel-buttons').classList.add('hidden');
   const embedBtns = document.getElementById('embed-buttons');
