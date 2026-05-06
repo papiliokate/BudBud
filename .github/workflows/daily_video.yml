@@ -34,6 +34,8 @@ jobs:
         run: npm ci
 
       - name: Generate Video
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 720x1280x24" node scripts/generate_video.js
 
