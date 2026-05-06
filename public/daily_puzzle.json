@@ -1,60 +1,78 @@
 {
-  "epoch": 20578,
-  "date": "2026-05-05",
+  "epoch": 20579,
+  "date": "2026-05-06",
   "buds": [
     {
-      "id": 1,
+      "id": 5,
       "likes": [
-        "emoji_rocket.png",
+        "emoji_diamond.png",
         "emoji_donut.png"
       ],
-      "dislike": "emoji_fox.png",
-      "asset": "bud_2.png"
-    },
-    {
-      "id": 0,
-      "likes": [
-        "emoji_watermelon.png",
-        "emoji_rocket.png"
-      ],
-      "dislike": "emoji_taco.png",
-      "asset": "bud_1.png"
-    },
-    {
-      "id": 3,
-      "likes": [
-        "emoji_taco.png",
-        "emoji_rocket.png"
-      ],
-      "dislike": "emoji_watermelon.png",
-      "asset": "bud_4.png"
-    },
-    {
-      "id": 4,
-      "likes": [
-        "emoji_fox.png",
-        "emoji_rocket.png"
-      ],
-      "dislike": "emoji_donut.png",
-      "asset": "bud_5.png"
+      "dislike": "emoji_soccer.png",
+      "asset": "bud_6.png"
     },
     {
       "id": 2,
       "likes": [
-        "emoji_donut.png",
-        "emoji_taco.png"
+        "emoji_sun.png",
+        "emoji_mushroom.png"
       ],
-      "dislike": "emoji_watermelon.png",
+      "dislike": "emoji_diamond.png",
       "asset": "bud_3.png"
     },
     {
-      "id": 5,
+      "id": 6,
       "likes": [
-        "emoji_fox.png",
-        "emoji_watermelon.png"
+        "emoji_diamond.png",
+        "emoji_sun.png"
       ],
-      "dislike": "emoji_taco.png",
-      "asset": "bud_6.png"
+      "dislike": "emoji_rocket.png",
+      "asset": "bud_7.png"
+    },
+    {
+      "id": 7,
+      "likes": [
+        "emoji_soccer.png",
+        "emoji_sun.png"
+      ],
+      "dislike": "emoji_rocket.png",
+      "asset": "bud_8.png"
+    },
+    {
+      "id": 0,
+      "likes": [
+        "emoji_donut.png",
+        "emoji_soccer.png"
+      ],
+      "dislike": "emoji_rocket.png",
+      "asset": "bud_1.png"
+    },
+    {
+      "id": 4,
+      "likes": [
+        "emoji_donut.png",
+        "emoji_rocket.png"
+      ],
+      "dislike": "emoji_soccer.png",
+      "asset": "bud_5.png"
+    },
+    {
+      "id": 3,
+      "likes": [
+        "emoji_rocket.png",
+        "emoji_sun.png"
+      ],
+      "dislike": "emoji_diamond.png",
+      "asset": "bud_4.png"
+    },
+    {
+      "id": 1,
+      "likes": [
+        "emoji_mushroom.png",
+        "emoji_donut.png"
+      ],
+      "dislike": "emoji_rocket.png",
+      "asset": "bud_2.png"
     }
   ]
 }
