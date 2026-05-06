@@ -670,7 +670,7 @@ function showVictory() {
 // Victory Modal Listeners
 document.getElementById('btn-next-level').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'next_level_clicked');
-    window.location.href = `/?epoch=${gameData.epoch + 1}`;
+    window.location.href = `?epoch=${gameData.epoch + 1}`;
 });
 document.getElementById('btn-install').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'install_prompt_clicked');
@@ -682,21 +682,21 @@ document.getElementById('btn-share').addEventListener('click', () => {
 });
 document.getElementById('btn-binge').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'binge_presale_click');
-    window.location.href = 'https://oops-games-hub.web.app/presale.html';
+    window.location.href = 'https://oops-games.com/presale.html';
 });
 document.getElementById('btn-hub').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'hub_clicked');
-    window.location.href = 'https://oops-games-hub.web.app';
+    window.location.href = 'https://oops-games.com';
 });
 document.getElementById('btn-next').addEventListener('click', advanceCarousel);
 document.getElementById('btn-binge-carousel').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'binge_presale_click');
-    window.location.href = 'https://oops-games-hub.web.app/presale.html?carousel=true';
+    window.location.href = 'https://oops-games.com/presale.html?carousel=true';
 });
 
 document.getElementById('btn-embed-hook')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'embed_hook_clicked');
-    window.open('https://oops-games-hub.web.app/', '_blank');
+    window.open('https://oops-games.com/', '_blank');
 });
 
 async function advanceCarousel() {
@@ -705,17 +705,17 @@ async function advanceCarousel() {
   if (!currentPlayed.includes('BB')) currentPlayed.push('BB');
   
   try {
-      const res = await fetch('https://oops-games-hub.web.app/carousel_config.json');
+      const res = await fetch('https://oops-games.com/carousel_config.json');
       const configList = await res.json();
       const unplayed = configList.filter(g => !currentPlayed.includes(g.id));
       if (unplayed.length > 0) {
           const nextGame = unplayed[Math.floor(Math.random() * unplayed.length)];
           window.location.href = `${nextGame.url}?carousel=true&played=${currentPlayed.join(',')}`;
       } else {
-          window.location.href = 'https://oops-games-hub.web.app/';
+          window.location.href = 'https://oops-games.com/';
       }
   } catch(e) {
-      window.location.href = 'https://oops-games-hub.web.app/';
+      window.location.href = 'https://oops-games.com/';
   }
 }
 
