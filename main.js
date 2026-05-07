@@ -146,6 +146,10 @@ async function initGame() {
        }
     }
 
+    await preloadGameAssets(gameData);
+    
+    document.getElementById('loading-screen').style.display = 'none';
+
     renderBuds();
     setupGlobalEvents();
     
@@ -195,6 +199,31 @@ if (new URLSearchParams(window.location.search).get('autoplay') === 'split') {
     banner.style.boxShadow = '0 4px 15px rgba(0,0,0,0.5)';
     banner.style.textShadow = '1px 1px 2px rgba(0,0,0,0.8)';
     document.body.appendChild(banner);
+}
+
+async function preloadGameAssets(data) {
+  const urls = [];
+  urls.push(`${import.meta.env.BASE_URL}assets/bg.png`);
+  urls.push(`${import.meta.env.BASE_URL}assets/miro_heart.png`);
+  
+  data.buds.forEach(bud => {
+      urls.push(`${import.meta.env.BASE_URL}assets/${bud.asset}`);
+      urls.push(`${import.meta.env.BASE_URL}assets/${bud.likes[0]}`);
+      urls.push(`${import.meta.env.BASE_URL}assets/${bud.likes[1]}`);
+      urls.push(`${import.meta.env.BASE_URL}assets/${bud.dislike}`);
+  });
+  
+  const uniqueUrls = [...new Set(urls)];
+  const promises = uniqueUrls.map(url => {
+      return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve; // Continue even if one fails
+          img.src = url;
+      });
+  });
+  
+  await Promise.all(promises);
 }
 
 function renderBuds() {
