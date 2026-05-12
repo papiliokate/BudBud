@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>BudBud - Free Daily Emoji Match Puzzle Game | Oops-Games</title>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'captcha' || params.get('mode') === 'embed' || params.get('client_id')) {
+        window.location.replace('./conversion.html' + window.location.search);
+    }
+  </script>
+
     <meta name="description" content="Play BudBud, the free daily emoji match puzzle game. Connect the buds, solve the logic puzzle, and share your score! Play instantly in your browser." />
     <link rel="stylesheet" href="/style.css">
   </head>
@@ -21,6 +28,7 @@
         <h1 id="title">Bud Bud</h1>
         <h2 id="subtitle">A Daily Puzzle Game</h2>
         <h3 id="branding">oops-game.com</h3>
+        <button id="header-carousel-next" class="btn-header" style="pointer-events: auto !important; display: none; background: linear-gradient(135deg, #00f0ff, #0055ff); color: white; border: none; cursor: pointer; font-weight: bold; padding: 5px 10px; border-radius: 12px; margin-left: 10px;">➡️ Next Game</button>
         <button id="tutorial-btn">❓ How to Play</button>
       </div>
       <!-- Standard Victory Modal -->
@@ -36,14 +44,11 @@
             <button id="btn-hub">🎮 Go to Games Hub</button>
           </div>
           <div id="carousel-buttons" class="hidden">
-            <button id="btn-next">➡️ Play the next game</button>
+            <button id="carousel-play-next">➡️ Play the next game</button>
             <button id="btn-share-carousel" class="hidden">📤 Share for another ride</button>
             <button id="btn-binge-carousel">🎟️ Binge this game</button>
           </div>
-          <div id="embed-buttons" class="hidden">
-            <p id="embed-hook-text" style="font-size: 1.2rem; margin-bottom: 15px; color: #333; font-weight: 600;">You survived Level 1! Only 4% of players beat Level 2.</p>
-            <button id="btn-embed-hook" style="background: #e91e63; color: white; width: 100%; font-size: 1.3rem; padding: 15px;">🚀 Play Full Game on Oops-Games</button>
-          </div>
+          
         </div>
       </div>
       <!-- Tutorial Modal -->
@@ -60,5 +65,7 @@
     </div>
     <script src="/streak_manager.js"></script>
     <script type="module" src="/main.js"></script>
-  </body>
+    <script src="/carousel_manager.js"></script>
+</body>
 </html>
+
