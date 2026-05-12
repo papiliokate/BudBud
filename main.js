@@ -133,18 +133,7 @@ async function initGame() {
     }
     gameData = await res.json();
 
-    const isEmbed = params.get('mode') === 'embed';
-    if (isEmbed && !epochParam) {
-       let baseEpoch = gameData.epoch;
-       if (baseEpoch % 3 !== 1) {
-          let targetEpoch = baseEpoch;
-          while(targetEpoch % 3 !== 1) targetEpoch++;
-          let embedRes = await fetch(import.meta.env.BASE_URL + `puzzles/${targetEpoch}.json`);
-          if (embedRes.ok) {
-              gameData = await embedRes.json();
-          }
-       }
-    }
+
 
     await preloadGameAssets(gameData);
     
@@ -691,7 +680,7 @@ function showVictory() {
 
   if (analytics) {
       let eventParams = {};
-      if (params.get('mode') === 'embed') eventParams.publisher_domain = publisherDomain;
+
       logEvent(analytics, 'level_complete', eventParams);
   }
 }
@@ -723,10 +712,7 @@ document.getElementById('btn-binge-carousel').addEventListener('click', () => {
     window.location.href = 'https://oops-games.com/presale.html?carousel=true';
 });
 
-document.getElementById('btn-embed-hook')?.addEventListener('click', () => {
-    if (analytics) logEvent(analytics, 'embed_hook_clicked');
-    window.open('https://oops-games.com/', '_blank');
-});
+
 
 async function advanceCarousel() {
   const playedGamesStr = params.get('played') || '';
@@ -749,16 +735,7 @@ async function advanceCarousel() {
 }
 
 const params = new URLSearchParams(window.location.search);
-if (params.get('mode') === 'embed') {
-  if (analytics) logEvent(analytics, 'embed_visit', { game_id: 'BB', publisher_domain: publisherDomain });
-  document.getElementById('standard-buttons').classList.add('hidden');
-  document.getElementById('carousel-buttons').classList.add('hidden');
-  const embedBtns = document.getElementById('embed-buttons');
-  if (embedBtns) embedBtns.classList.remove('hidden');
-  document.getElementById('vic-cypher').style.display = 'none';
-  const h2 = document.querySelector('#victory-modal h2');
-  if (h2) h2.innerText = "Level 1 Complete!";
-} else if (params.get('carousel') === 'true') {
+if (params.get('carousel') === 'true') {
   if (analytics) logEvent(analytics, 'carousel_visit', { game_id: 'BB' });
   document.getElementById('standard-buttons').classList.add('hidden');
   document.getElementById('carousel-buttons').classList.remove('hidden');
