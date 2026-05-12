@@ -1,60 +1,78 @@
 {
-  "epoch": 20584,
-  "date": "2026-05-11",
+  "epoch": 20585,
+  "date": "2026-05-12",
   "buds": [
     {
-      "id": 4,
+      "id": 0,
       "likes": [
-        "emoji_basketball.png",
-        "emoji_butterfly.png"
+        "emoji_taco.png",
+        "emoji_soccer.png"
       ],
-      "dislike": "emoji_guitar.png",
-      "asset": "bud_5.png"
+      "dislike": "emoji_turtle.png",
+      "asset": "bud_1.png"
     },
     {
       "id": 3,
       "likes": [
-        "emoji_basketball.png",
-        "emoji_soccer.png"
+        "emoji_turtle.png",
+        "emoji_piano.png"
       ],
-      "dislike": "emoji_palette.png",
+      "dislike": "emoji_icecream.png",
       "asset": "bud_4.png"
     },
     {
-      "id": 2,
+      "id": 7,
       "likes": [
-        "emoji_guitar.png",
-        "emoji_soccer.png"
+        "emoji_soccer.png",
+        "emoji_piano.png"
       ],
-      "dislike": "emoji_butterfly.png",
-      "asset": "bud_3.png"
-    },
-    {
-      "id": 1,
-      "likes": [
-        "emoji_basketball.png",
-        "emoji_guitar.png"
-      ],
-      "dislike": "emoji_butterfly.png",
-      "asset": "bud_2.png"
+      "dislike": "emoji_turtle.png",
+      "asset": "bud_8.png"
     },
     {
       "id": 5,
       "likes": [
-        "emoji_palette.png",
-        "emoji_butterfly.png"
+        "emoji_icecream.png",
+        "emoji_taco.png"
       ],
-      "dislike": "emoji_guitar.png",
+      "dislike": "emoji_soccer.png",
       "asset": "bud_6.png"
     },
     {
-      "id": 0,
+      "id": 6,
       "likes": [
-        "emoji_palette.png",
-        "emoji_basketball.png"
+        "emoji_icecream.png",
+        "emoji_piano.png"
+      ],
+      "dislike": "emoji_turtle.png",
+      "asset": "bud_7.png"
+    },
+    {
+      "id": 2,
+      "likes": [
+        "emoji_piano.png",
+        "emoji_balloon.png"
+      ],
+      "dislike": "emoji_icecream.png",
+      "asset": "bud_3.png"
+    },
+    {
+      "id": 4,
+      "likes": [
+        "emoji_taco.png",
+        "emoji_turtle.png"
       ],
       "dislike": "emoji_soccer.png",
-      "asset": "bud_1.png"
+      "asset": "bud_5.png"
+    },
+    {
+      "id": 1,
+      "likes": [
+        "emoji_balloon.png",
+        "emoji_taco.png"
+      ],
+      "dislike": "emoji_turtle.png",
+      "asset": "bud_2.png"
     }
   ]
 }
