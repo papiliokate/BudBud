@@ -1,5 +1,6 @@
 import './style.css'
-import { initializeApp, getAnalytics, logEvent } from "./analytics_wrapper.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
 
 let analytics;
 if (import.meta.env && import.meta.env.VITE_FIREBASE_API_KEY) {
@@ -15,7 +16,7 @@ if (import.meta.env && import.meta.env.VITE_FIREBASE_API_KEY) {
     };
     const app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
-    logEvent(analytics, 'custom_session_start');
+    logEvent(analytics, 'session_start');
   } catch (e) {
     console.warn("Analytics error:", e);
   }
@@ -716,7 +717,7 @@ document.getElementById('btn-hub').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'hub_clicked');
     window.location.href = 'https://oops-games.com';
 });
-
+document.getElementById('btn-next').addEventListener('click', advanceCarousel);
 document.getElementById('btn-binge-carousel').addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'binge_presale_click');
     window.location.href = 'https://oops-games.com/presale.html?carousel=true';
@@ -733,16 +734,8 @@ async function advanceCarousel() {
   if (!currentPlayed.includes('BB')) currentPlayed.push('BB');
   
   try {
-      const configList = [
-                { "id": "GR", "url": "/go-rabbit" },
-                { "id": "SS", "url": "/she-sells-sea-shells" },
-                { "id": "ST", "url": "/smack-that-donkey" },
-                { "id": "OG", "url": "/o-gox" },
-                { "id": "BB", "url": "/budbud" },
-                { "id": "LW", "url": "/lightning-words" },
-                { "id": "NIM", "url": "/nomisekili" },
-                { "id": "SDM", "url": "/sunny-day-maze" }
-            ];
+      const res = await fetch('https://oops-games.com/carousel_config.json');
+      const configList = await res.json();
       const unplayed = configList.filter(g => !currentPlayed.includes(g.id));
       if (unplayed.length > 0) {
           const nextGame = unplayed[Math.floor(Math.random() * unplayed.length)];
