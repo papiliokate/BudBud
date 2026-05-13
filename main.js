@@ -686,28 +686,28 @@ function showVictory() {
 }
 
 // Victory Modal Listeners
-document.getElementById('btn-next-level').addEventListener('click', () => {
+document.getElementById('btn-next-level')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'next_level_clicked');
     window.location.href = `?epoch=${gameData.epoch + 1}`;
 });
-document.getElementById('btn-install').addEventListener('click', () => {
+document.getElementById('btn-install')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'install_prompt_clicked');
     alert("Add to Home Screen from your browser menu!");
 });
-document.getElementById('btn-share').addEventListener('click', () => {
+document.getElementById('btn-share')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'brag_clicked');
     alert("Thanks for sharing!");
 });
-document.getElementById('btn-binge').addEventListener('click', () => {
+document.getElementById('btn-binge')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'binge_presale_click');
     window.location.href = 'https://oops-games.com/presale.html';
 });
-document.getElementById('btn-hub').addEventListener('click', () => {
+document.getElementById('btn-hub')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'hub_clicked');
     window.location.href = 'https://oops-games.com';
 });
-document.getElementById('btn-next').addEventListener('click', advanceCarousel);
-document.getElementById('btn-binge-carousel').addEventListener('click', () => {
+document.getElementById('btn-next')?.addEventListener('click', advanceCarousel);
+document.getElementById('btn-binge-carousel')?.addEventListener('click', () => {
     if (analytics) logEvent(analytics, 'binge_presale_click');
     window.location.href = 'https://oops-games.com/presale.html?carousel=true';
 });
