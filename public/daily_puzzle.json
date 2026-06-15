@@ -1,78 +1,42 @@
 {
-  "epoch": 20618,
-  "date": "2026-06-14",
+  "epoch": 20619,
+  "date": "2026-06-15",
   "buds": [
-    {
-      "id": 4,
-      "likes": [
-        "emoji_sunflower.png",
-        "emoji_butterfly.png"
-      ],
-      "dislike": "emoji_soccer.png",
-      "asset": "bud_5.png"
-    },
-    {
-      "id": 0,
-      "likes": [
-        "emoji_fox.png",
-        "emoji_butterfly.png"
-      ],
-      "dislike": "emoji_sunflower.png",
-      "asset": "bud_1.png"
-    },
     {
       "id": 2,
       "likes": [
-        "emoji_soccer.png",
-        "emoji_donut.png"
+        "emoji_basketball.png",
+        "emoji_car.png"
       ],
-      "dislike": "emoji_icecream.png",
+      "dislike": "emoji_butterfly.png",
       "asset": "bud_3.png"
     },
     {
       "id": 1,
       "likes": [
-        "emoji_butterfly.png",
-        "emoji_soccer.png"
+        "emoji_basketball.png",
+        "emoji_car.png"
       ],
-      "dislike": "emoji_sunflower.png",
+      "dislike": "emoji_rocket.png",
       "asset": "bud_2.png"
     },
     {
       "id": 3,
       "likes": [
-        "emoji_donut.png",
-        "emoji_sunflower.png"
+        "emoji_car.png",
+        "emoji_diamond.png"
       ],
-      "dislike": "emoji_icecream.png",
+      "dislike": "emoji_apple.png",
       "asset": "bud_4.png"
     },
     {
-      "id": 5,
+      "id": 0,
       "likes": [
-        "emoji_butterfly.png",
-        "emoji_icecream.png"
+        "emoji_diamond.png",
+        "emoji_car.png"
       ],
-      "dislike": "emoji_fox.png",
-      "asset": "bud_6.png"
-    },
-    {
-      "id": 7,
-      "likes": [
-        "emoji_fox.png",
-        "emoji_donut.png"
-      ],
-      "dislike": "emoji_sunflower.png",
-      "asset": "bud_8.png"
-    },
-    {
-      "id": 6,
-      "likes": [
-        "emoji_donut.png",
-        "emoji_icecream.png"
-      ],
-      "dislike": "emoji_sunflower.png",
-      "asset": "bud_7.png"
+      "dislike": "emoji_turtle.png",
+      "asset": "bud_1.png"
     }
   ]
 }
