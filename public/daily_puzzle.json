@@ -1,39 +1,48 @@
 {
-  "epoch": 20668,
-  "date": "2026-08-03",
+  "epoch": 20669,
+  "date": "2026-08-04",
   "buds": [
-    {
-      "id": 4,
-      "likes": [
-        "emoji_sun.png",
-        "emoji_apple.png"
-      ],
-      "dislike": "emoji_ufo.png",
-      "asset": "bud_5.png"
-    },
     {
       "id": 1,
       "likes": [
         "emoji_apple.png",
-        "emoji_ufo.png"
+        "emoji_guitar.png"
       ],
-      "dislike": "emoji_sun.png",
+      "dislike": "emoji_basketball.png",
       "asset": "bud_2.png"
     },
     {
-      "id": 5,
+      "id": 2,
       "likes": [
-        "emoji_pizza.png",
-        "emoji_sun.png"
+        "emoji_soccer.png",
+        "emoji_apple.png"
       ],
-      "dislike": "emoji_balloon.png",
-      "asset": "bud_6.png"
+      "dislike": "emoji_pizza.png",
+      "asset": "bud_3.png"
+    },
+    {
+      "id": 6,
+      "likes": [
+        "emoji_soccer.png",
+        "emoji_basketball.png"
+      ],
+      "dislike": "emoji_apple.png",
+      "asset": "bud_7.png"
+    },
+    {
+      "id": 4,
+      "likes": [
+        "emoji_guitar.png",
+        "emoji_cactus.png"
+      ],
+      "dislike": "emoji_apple.png",
+      "asset": "bud_5.png"
     },
     {
       "id": 3,
       "likes": [
-        "emoji_balloon.png",
-        "emoji_apple.png"
+        "emoji_cactus.png",
+        "emoji_soccer.png"
       ],
       "dislike": "emoji_pizza.png",
       "asset": "bud_4.png"
@@ -41,20 +50,29 @@
     {
       "id": 0,
       "likes": [
-        "emoji_pizza.png",
-        "emoji_apple.png"
+        "emoji_guitar.png",
+        "emoji_pizza.png"
       ],
-      "dislike": "emoji_balloon.png",
+      "dislike": "emoji_cactus.png",
       "asset": "bud_1.png"
     },
     {
-      "id": 2,
+      "id": 7,
       "likes": [
-        "emoji_balloon.png",
-        "emoji_ufo.png"
+        "emoji_soccer.png",
+        "emoji_pizza.png"
+      ],
+      "dislike": "emoji_cactus.png",
+      "asset": "bud_8.png"
+    },
+    {
+      "id": 5,
+      "likes": [
+        "emoji_guitar.png",
+        "emoji_basketball.png"
       ],
       "dislike": "emoji_pizza.png",
-      "asset": "bud_3.png"
+      "asset": "bud_6.png"
     }
   ]
 }
