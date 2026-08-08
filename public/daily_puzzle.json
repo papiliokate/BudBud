@@ -1,78 +1,42 @@
 {
-  "epoch": 20672,
-  "date": "2026-08-07",
+  "epoch": 20673,
+  "date": "2026-08-08",
   "buds": [
     {
-      "id": 0,
+      "id": 3,
       "likes": [
-        "emoji_balloon.png",
-        "emoji_rainbow.png"
+        "emoji_rainbow.png",
+        "emoji_taco.png"
       ],
-      "dislike": "emoji_icecream.png",
-      "asset": "bud_1.png"
-    },
-    {
-      "id": 6,
-      "likes": [
-        "emoji_icecream.png",
-        "emoji_turtle.png"
-      ],
-      "dislike": "emoji_donut.png",
-      "asset": "bud_7.png"
+      "dislike": "emoji_piano.png",
+      "asset": "bud_4.png"
     },
     {
       "id": 2,
       "likes": [
-        "emoji_palette.png",
-        "emoji_turtle.png"
+        "emoji_guitar.png",
+        "emoji_rainbow.png"
       ],
       "dislike": "emoji_balloon.png",
       "asset": "bud_3.png"
     },
     {
-      "id": 7,
+      "id": 0,
       "likes": [
-        "emoji_balloon.png",
-        "emoji_turtle.png"
+        "emoji_taco.png",
+        "emoji_rainbow.png"
       ],
-      "dislike": "emoji_palette.png",
-      "asset": "bud_8.png"
-    },
-    {
-      "id": 4,
-      "likes": [
-        "emoji_rainbow.png",
-        "emoji_donut.png"
-      ],
-      "dislike": "emoji_balloon.png",
-      "asset": "bud_5.png"
+      "dislike": "emoji_diamond.png",
+      "asset": "bud_1.png"
     },
     {
       "id": 1,
       "likes": [
         "emoji_rainbow.png",
-        "emoji_palette.png"
+        "emoji_guitar.png"
       ],
-      "dislike": "emoji_icecream.png",
+      "dislike": "emoji_sun.png",
       "asset": "bud_2.png"
-    },
-    {
-      "id": 3,
-      "likes": [
-        "emoji_turtle.png",
-        "emoji_donut.png"
-      ],
-      "dislike": "emoji_balloon.png",
-      "asset": "bud_4.png"
-    },
-    {
-      "id": 5,
-      "likes": [
-        "emoji_rainbow.png",
-        "emoji_icecream.png"
-      ],
-      "dislike": "emoji_balloon.png",
-      "asset": "bud_6.png"
     }
   ]
 }
