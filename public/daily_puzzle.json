@@ -1,59 +1,77 @@
 {
-  "epoch": 20719,
-  "date": "2026-09-23",
+  "epoch": 20720,
+  "date": "2026-09-24",
   "buds": [
-    {
-      "id": 5,
-      "likes": [
-        "emoji_taco.png",
-        "emoji_rocket.png"
-      ],
-      "dislike": "emoji_car.png",
-      "asset": "bud_6.png"
-    },
     {
       "id": 4,
       "likes": [
-        "emoji_taco.png",
-        "emoji_fox.png"
+        "emoji_rainbow.png",
+        "emoji_soccer.png"
       ],
-      "dislike": "emoji_car.png",
+      "dislike": "emoji_butterfly.png",
       "asset": "bud_5.png"
     },
     {
-      "id": 3,
+      "id": 5,
       "likes": [
         "emoji_fox.png",
-        "emoji_rainbow.png"
+        "emoji_soccer.png"
       ],
-      "dislike": "emoji_rocket.png",
-      "asset": "bud_4.png"
+      "dislike": "emoji_mushroom.png",
+      "asset": "bud_6.png"
     },
     {
       "id": 2,
       "likes": [
-        "emoji_car.png",
-        "emoji_rainbow.png"
+        "emoji_donut.png",
+        "emoji_butterfly.png"
       ],
-      "dislike": "emoji_rocket.png",
+      "dislike": "emoji_mushroom.png",
       "asset": "bud_3.png"
+    },
+    {
+      "id": 6,
+      "likes": [
+        "emoji_donut.png",
+        "emoji_fox.png"
+      ],
+      "dislike": "emoji_rainbow.png",
+      "asset": "bud_7.png"
     },
     {
       "id": 0,
       "likes": [
-        "emoji_fox.png",
-        "emoji_rocket.png"
+        "emoji_mushroom.png",
+        "emoji_soccer.png"
+      ],
+      "dislike": "emoji_fox.png",
+      "asset": "bud_1.png"
+    },
+    {
+      "id": 7,
+      "likes": [
+        "emoji_donut.png",
+        "emoji_mushroom.png"
       ],
       "dislike": "emoji_rainbow.png",
-      "asset": "bud_1.png"
+      "asset": "bud_8.png"
+    },
+    {
+      "id": 3,
+      "likes": [
+        "emoji_donut.png",
+        "emoji_rainbow.png"
+      ],
+      "dislike": "emoji_fox.png",
+      "asset": "bud_4.png"
     },
     {
       "id": 1,
       "likes": [
-        "emoji_car.png",
-        "emoji_fox.png"
+        "emoji_soccer.png",
+        "emoji_butterfly.png"
       ],
-      "dislike": "emoji_taco.png",
+      "dislike": "emoji_fox.png",
       "asset": "bud_2.png"
     }
   ]
